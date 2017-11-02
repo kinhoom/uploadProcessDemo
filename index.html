@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<style>
+		.container{
+			margin:4px 4px;
+		}
+		*{
+			padding:0px;
+			margin:0px;
+		}
+
+	</style>
+	 <script src="jquery.js"></script>
+	 <script>
+	;$(function(){
+		$('input[type=button]').bind('click',function(){
+			$('#form1').submit();
+			getprocess();
+			// setTimeout(getprocess(),20); #第二种方法，延迟加载apc
+		})
+		function getprocess(type){
+			$.ajax({
+				url:'apc.php',
+				type:'post',
+				dataType:'html',
+				data:{key:'1243'},
+				success:function(data){
+					console.log(data);
+					var percent = parseFloat(data);
+					$('span').text("正在上传");
+					$('#p').css({'width':(150*percent)+'px'});
+					var t = setInterval(getprocess,2);//数值尽量设置小
+					if(data==1){
+						clearInterval(t);
+					}
+				}
+			})
+		}
+		});
+	 </script>
+</head>
+<body>
+	<div class="container">
+	<form id="form1" action="upload.php" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="APC_UPLOAD_PROGRESS" value="1243">
+		<input type="file" name="file1">
+		<input type="button" value="提交">
+		<div style="width:150px;height:20px;border:thin solid #ccc" id="u">	
+		<div style="width:0px;height: 20px; background: #0fc;" id="p"></div>
+		</div>
+		<span></span>
+	</form>
+	</div>
+</body>
+</html>
