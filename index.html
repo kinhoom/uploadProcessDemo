@@ -18,8 +18,8 @@
 	;$(function(){
 		$('input[type=button]').bind('click',function(){
 			$('#form1').submit();
-			getprocess();
-			// setTimeout(getprocess(),20); #第二种方法，延迟加载apc
+			// getprocess();
+			setTimeout(getprocess,20); 
 		})
 		function getprocess(type){
 			$.ajax({
@@ -27,19 +27,23 @@
 				type:'post',
 				dataType:'html',
 				data:{key:'1243'},
-				success:function(data){
-					console.log(data);
-					var percent = parseFloat(data);
+				success:function(data,textcode){
+					var percent = data;
+					console.log(percent);
 					$('span').text("正在上传");
-					$('#p').css({'width':(150*percent)+'px'});
-					var t = setInterval(getprocess,2);//数值尽量设置小
-					if(data==1){
+					$('#p').css({'width':(percent)+'px'});
+					$('#p').text((percent)+'%');
+					var t = setInterval(getprocess,20);//数值尽量设置小
+					if(data==100){
 						clearInterval(t);
 					}
+				},
+				error:function(code){
+					//console.log(code);
 				}
 			})
 		}
-		});
+		 });
 	 </script>
 </head>
 <body>
@@ -49,7 +53,7 @@
 		<input type="file" name="file1">
 		<input type="button" value="提交">
 		<div style="width:150px;height:20px;border:thin solid #ccc" id="u">	
-		<div style="width:0px;height: 20px; background: #0fc;" id="p"></div>
+		<div style="width:0px;height: 20px; background: #0fc;color:#ffffff;text-align:center" id="p"></div>
 		</div>
 		<span></span>
 	</form>
