@@ -19,7 +19,7 @@
 		$('input[type=button]').bind('click',function(){
 			$('#form1').submit();
 			getprocess();
-			// setTimeout(getprocess(),20); #第二种方法，延迟加载apc
+			// setTimeout(getprocess,20); //第二种方法，延迟加载apc
 		})
 		function getprocess(type){
 			$.ajax({
