@@ -32,7 +32,7 @@
 					var percent = parseFloat(data);
 					$('span').text("正在上传");
 					$('#p').css({'width':(150*percent)+'px'});
-					var t = setInterval(getprocess,2);//数值尽量设置小
+					var t = setInterval(getprocess,200);//数值尽量设置小
 					if(data==1){
 						clearInterval(t);
 					}
